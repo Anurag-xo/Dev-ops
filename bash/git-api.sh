@@ -19,45 +19,49 @@
 
 # REPO_NAME: The name of the repository (passed as the second argument $2).
 
-
-# Also install jq
+# Dependencies: Install jq (sudo apt install jq)
 #######################################################################################################
 
 API_URL="https://api.github.com"
 
-# Github username and PAT(personal access token)
-USERNAME=$username
-TOKEN=$token
+# GitHub username and PAT (personal access token)
+USERNAME="your_github_username"  # Replace with your GitHub username or pass as an environment variable
+TOKEN="your_personal_access_token"  # Replace with your GitHub PAT or pass as an environment variable
 
 # User and Repository information
 REPO_OWNER=$1
 REPO_NAME=$2
 
- # Function to mae GET request to the Github API
- function github_api_get {
-   local endpoint="$1"
-   local url="${API_URL}/${endpoint}"
+# Function to make GET request to the GitHub API
+function github_api_get {
+  local endpoint="$1"
+  local url="${API_URL}/${endpoint}"
 
-   # Send GET request to GITHUB API with authentication
-   curl -s -u "${USERNAME}:${TOKEN}" "$url"
- }
- # Function to list useres with read acces to the Repository
+  # Send GET request to GitHub API with authentication
+  curl -s -u "${USERNAME}:${TOKEN}" "$url"
+}
+
+# Function to list users with read access to the repository
 function list_users_with_read_access {
   local endpoint="repos/${REPO_OWNER}/${REPO_NAME}/collaborators"
 
-  # Fetch the list of collaborators on the Repository
-  github_api_getgitgithub_api_get "endpoint" | jq -r '.[] | select(.permissions.pull == true | .login') 
+  # Fetch the list of collaborators on the repository
+  collaborators=$(github_api_get "$endpoint" | jq -r '.[] | select(.permissions.pull == true) | .login')
 
   # Display the list of collaborators with read access
   if [[ -z "$collaborators" ]]; then
-    echo "No user with read acces found for ${REPO_OWNER}/${REPO_NAME}."
+    echo "No users with read access found for ${REPO_OWNER}/${REPO_NAME}."
   else
-    echo "Users with read access ${REPO_OWNER}/${REPO_NAME}:"
+    echo "Users with read access to ${REPO_OWNER}/${REPO_NAME}:"
     echo "$collaborators"
   fi
 }
 
 # Main script
-echo "Listening users with read acces to ${REPO_OWNER}/${REPO_NAME}...."
-list_users_with_read_access
+if [[ -z "$REPO_OWNER" || -z "$REPO_NAME" ]]; then
+  echo "Usage: $0 <repo_owner> <repo_name>"
+  exit 1
+fi
 
+echo "Listing users with read access to ${REPO_OWNER}/${REPO_NAME}..."
+list_users_with_read_access
