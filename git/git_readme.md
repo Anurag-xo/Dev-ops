@@ -1,4 +1,4 @@
-# _Git Braching Strategy_
+# _Git Branching Strategy_
 
 Git branching allows you to create separate lines of development within a repository, enabling you to work on features, fixes, or experiments independently without affecting the main codebase.
 
@@ -6,7 +6,7 @@ Git branching allows you to create separate lines of development within a reposi
 
 - A branch in Git is a pointer to a specific commit in the repository's history.
 
-- It represents an independent line of development, allowing you to work on featuresk, bug fixes, or experiments without affecting the main codebase (usually the main or master branch).
+- It represents an independent line of development, allowing you to work on features, bug fixes, or experiments without affecting the main codebase (usually the main or master branch).
 
 ## 2.Key Concepts
 
@@ -18,7 +18,7 @@ Git branching allows you to create separate lines of development within a reposi
 ### Feature Branch
 
 - A branch created to develop a new feature.
-- Example: feature/lognin-page
+- Example: feature/login-page
 
 ### Bugfix Branch
 
@@ -132,7 +132,7 @@ git push origin <branch-name>
 ### Track a Remote Branch
 
 ```bash
-git checkout --track origin/<branch-name>u
+git checkout --track origin/<branch-name>
 ```
 
 ### Delete a Remote Branch
@@ -164,21 +164,21 @@ git merge feature/new-feature
 - Use specific branches for features, releases and hotfixes.
 - Example:
 
-* _main_: production-ready code.
-* _develop_: Integration branch for features.
+* **main** : production-ready code.
+* **develop** : Integration branch for features.
 * \*feature/\*\*: Feature branches.
 * \*release/\*\*: Releases preparation branches.
 * \*hotfix/\*\*: Critical bug fixes.
 
 ## Forking Workflow
 
-- Each developer forks the main repository and workd on their on their own copy.
-- Changes are merges vai pull requestes.
+- Each developer forks the main repository and worked on their on their own copy.
+- Changes are merges via pull Requests.
 
-## 9.Best Practies
+## 9.Best Practices
 
 - **keep Branches small**: work on one feature or bug fix per branch.
 - **Name Branches Clearly**: Use descriptive names like feature/login-page or bugfix/issue-123.
 - **Merge Frequently**: Regularly merge changes from main into you branch to avoid large conflicts.
-- **Deleted Merged Branches**: clean up branches that are no longer neede.
+- **Deleted Merged Branches**: clean up branches that are no longer needed.
 - **Use Pull Requests**: Review and discuss changes before merging.
